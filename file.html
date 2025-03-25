@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khadiza's Birthday Party!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff0f5;
+            font-family: 'Comic Sans MS', cursive;
+            overflow: hidden;
+        }
+
+        /* Water drop */
+        .drop {
+            width: 25px;
+            height: 35px;
+            background: #ff69b4;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+            animation: hang 2s infinite ease-in-out;
+            z-index: 10;
+        }
+
+        @keyframes hang {
+            0%, 100% { transform: translateY(0) rotateZ(0deg); }
+            50% { transform: translateY(-8px) rotateZ(5deg); }
+        }
+
+        /* Falling animation */
+        .falling {
+            animation: none;
+            transition: top 0.6s cubic-bezier(0.3, 0, 0, 1), transform 0.4s;
+        }
+
+        /* Splash effect */
+        .splash {
+            width: 40px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.5) 0%, transparent 70%);
+            position: absolute;
+            bottom: 0;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        /* Birthday message */
+        .message {
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+            z-index: 2;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .name {
+            font-size: 3em;
+            color: #ff1493;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .name:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dance animation */
+        .dance {
+            animation: dance 0.5s infinite alternate;
+        }
+
+        @keyframes dance {
+            0% { transform: rotate(-10deg) translateY(0); }
+            100% { transform: rotate(10deg) translateY(-10px); }
+        }
+
+        .date {
+            font-size: 1.5em;
+            color: #ff69b4;
+            margin: 5px 0;
+        }
+
+        .wish {
+            font-size: 2em;
+            color: #ff1493;
+            margin: 10px 0;
+        }
+
+        /* Balloons */
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            background: #ff69b4;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 25px;
+            width: 2px;
+            height: 30px;
+            background: #ff69b4;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-50px) rotate(-5deg); }
+        }
+
+        /* Rockets */
+        .rocket {
+            position: absolute;
+            font-size: 1.5em;
+            opacity: 0;
+            z-index: 20;
+            animation: rocket 2s ease-out forwards;
+        }
+
+        @keyframes rocket {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: confetti 3s ease-in-out forwards;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Water drop -->
+    <div class="drop" id="drop"></div>
+
+    <!-- Splash effect -->
+    <div class="splash" id="splash"></div>
+
+    <!-- Birthday message -->
+    <div class="message" id="message">
+        <h1 class="name" id="name">Khadiza</h1>
+        <p class="date">9 October 2008</p>
+        <p class="wish">Happy Birthday :3</p>
+    </div>
+
+    <script>
+        const drop = document.getElementById("drop");
+        const splash = document.getElementById("splash");
+        const message = document.getElementById("message");
+        const name = document.getElementById("name");
+
+        // Create floating balloons
+        function createBalloons() {
+            const colors = ['#ff69b4', '#ff1493', '#ffb6c1', '#db7093'];
+            for (let i = 0; i < 8; i++) {
+                const balloon = document.createElement("div");
+                balloon.className = "balloon";
+                balloon.style.left = Math.random() * 100 + "vw";
+                balloon.style.top = Math.random() * 100 + "vh";
+                balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.animationDelay = Math.random() * 5 + "s";
+                balloon.style.opacity = "0.7";
+                balloon.style.transform = scale(${Math.random() * 0.5 + 0.5});
+                document.body.appendChild(balloon);
+            }
+        }
+
+        // Create rockets
+        function createRockets() {
+            const yays = ["YAY!", "WOOHOO!", "YIPPEE!", "🎉", "🎊"];
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const rocket = document.createElement("div");
+                    rocket.className = "rocket";
+                    rocket.textContent = yays[Math.floor(Math.random() * yays.length)];
+                    rocket.style.left = Math.random() * 100 + "vw";
+                    rocket.style.bottom = "0";
+                    rocket.style.color = hsl(${Math.random() * 360}, 100%, 50%);
+                    rocket.style.animationDelay = i * 0.2 + "s";
+                    document.body.appendChild(rocket);
+                }, i * 200);
+            }
+        }
+
+        // Create confetti
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement("div");
+                    confetti.className = "confetti";
+                    confetti.style.left = Math.random() * 100 + "vw";
+                    confetti.style.top = "-10px";
+                    confetti.style.background = hsl(${Math.random() * 360}, 100%, 50%);
+                    confetti.style.animationDelay = i * 0.05 + "s";
+                    document.body.appendChild(confetti);
+                }, i * 50);
+            }
+        }
+
+        // Drop click handler
+        drop.addEventListener("click", () => {
+            drop.classList.add("falling");
+            drop.style.top = "calc(100vh - 30px)";
+            drop.style.transform = "scale(0.7) rotateZ(15deg)";
+
+            setTimeout(() => {
+                splash.style.left = drop.getBoundingClientRect().left - 5 + "px";
+                splash.style.opacity = "1";
+                splash.style.transform = "scale(1.8)";
+                
+                setTimeout(() => {
+                    drop.remove();
+                    splash.style.opacity = "0";
+                    message.classList.add("show");
+                    createBalloons();
+                }, 400);
+            }, 500);
+        });
+
+        // Name click handler (start party!)
+        name.addEventListener("click", () => {
+            name.classList.add("dance");
+            createRockets();
+            createConfetti();
+            
+            // Play sound (uncomment to add)
+            // const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-happy-birthday-to-you-2223.mp3');
+            // audio.play();
+        });
+    </script>
+</body>
+</html>
